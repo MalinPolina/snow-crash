@@ -1,10 +1,8 @@
-level02.pcap
-
-scp -P 4242 level00@192.168.31.128:/home/user/level02/level02.pcap  /home/polina/LifeAfterCircles/snowcrash/
-
-packet 43 with 'Password'
-
-Следовать-> Поток TCP 
+The only file in level02 folder is `level02.pcap`. `pcap` files contain captured network traffic <br />
+After copying the file fron VM we can use *WireShark* to analyse it <br />
+Just by scrolling through packets you can find packet 43 with the word 'Password' in it <br />
+After clicking **Analysis -> Follow -> TCP Stream** we get this dialog: 
+```
 ..%..%..&..... ..#..'..$..&..... ..#..'..$.. .....#.....'........... .38400,38400....#.SodaCan:0....'..DISPLAY.SodaCan:0......xterm.........."........!........"..".....b........b....	B.
 ..............................1.......!.."......"......!..........."........"..".............	..
 .....................
@@ -17,9 +15,9 @@ Password: ft_wandr...NDRel.L0L
 ..
 Login incorrect
 wwwbugs login: 
-
-
-
+```
+Let's look at this password in hex:
+```
     000000D6  00 0d 0a 50 61 73 73 77  6f 72 64 3a 20            ...Passw ord: 
 000000B9  66                                                 f
 000000BA  74                                                 t
@@ -42,12 +40,12 @@ wwwbugs login:
 000000CB  30                                                 0
 000000CC  4c                                                 L
 000000CD  0d                                                 .
-
-
-
-dots = DEl (7f)
-
-ft_waNDReL0L
-
+```
+In ASCII `dots(.) = 7f = DEL` so we remove deleted symbols and get password: `ft_waNDReL0L`
+```
+level02@SnowCrash:~$ su flag02
+Password:
+Don't forget to launch getflag !
 flag02@SnowCrash:~$ getflag
 Check flag.Here is your token : kooda2puivaav1idi4f57q8iq
+```

